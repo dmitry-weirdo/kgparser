@@ -10,7 +10,9 @@ import ru.klavogonki.statistics.dto.PlayerMultiVocabularyDto;
 import ru.klavogonki.statistics.entity.PlayerEntity;
 import ru.klavogonki.statistics.entity.PlayerVocabularyStatsEntity;
 import ru.klavogonki.statistics.freemarker.HaulUtils;
+import ru.klavogonki.statistics.util.DateUtils;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +35,14 @@ public interface PlayerMultiVocabularyDtoMapper {
     @Mapping(source = "player.registered", target = "registered")
     @Mapping(source = "player.ratingLevel", target = "ratingLevel")
     @Mapping(source = "player.profileLink", target = "profileLink")
-    @Mapping(source = "vocabularies", target = "vocabulariesData")
+    @Mapping(source = "vocabularies", target = "vocabulariesMap")
     PlayerMultiVocabularyDto toDto(InputWrapper input);
 
     List<PlayerMultiVocabularyDto> toDtoList(List<InputWrapper> inputList);
+
+    default String localDateTimeToString(LocalDateTime localDateTime) {
+        return DateUtils.formatDateTimeForUi(localDateTime);
+    }
 
     @AfterMapping
     default void fillSummaryFields(InputWrapper input, @MappingTarget PlayerMultiVocabularyDto target) {

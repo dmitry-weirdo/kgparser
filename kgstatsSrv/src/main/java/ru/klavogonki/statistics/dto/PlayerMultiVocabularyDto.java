@@ -2,11 +2,12 @@ package ru.klavogonki.statistics.dto;
 
 import lombok.Data;
 import ru.klavogonki.kgparser.Rank;
+import ru.klavogonki.statistics.freemarker.OrderUtils;
 
 import java.util.Map;
 
 @Data
-public class PlayerMultiVocabularyDto {
+public class PlayerMultiVocabularyDto implements OrderUtils.OrderNumberDto {
 
     /**
      * Порядковый номер в таблице результатов.
@@ -51,5 +52,5 @@ public class PlayerMultiVocabularyDto {
 
     private Integer totalHaulInteger;
 
-    private Map<String, PlayerVocabularyDataDto> vocabulariesData; // vocabulary code to vocabulary data
+    private Map<String, PlayerVocabularyDataDto> vocabulariesMap; // vocabulary code to vocabulary data
 }

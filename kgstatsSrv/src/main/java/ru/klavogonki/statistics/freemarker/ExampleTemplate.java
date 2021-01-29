@@ -37,6 +37,8 @@ public class ExampleTemplate extends FreemarkerTemplate {
 
         templateData.put("testMap", map);
 
+        templateData.put("testStringWithNbsp", "Non&nbsp;string");
+
         String result = super.exportToString();
         logger.debug("result:\n{}", result);
     }

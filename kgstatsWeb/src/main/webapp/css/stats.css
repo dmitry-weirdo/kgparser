@@ -38,6 +38,10 @@ a:hover {
     color: #d32f2f !important;
 }
 
+.nowrap {
+    white-space: nowrap;
+}
+
 /* rank colors, apply to any elements */
 /* see ru.klavogonki.kgparser.Rank#getColor */
 .novice { color: #8D8D8D; }

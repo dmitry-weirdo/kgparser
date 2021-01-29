@@ -28,3 +28,20 @@ X second assign: ${x}
     Value: ${value}
     ==========================================
 </#list>
+
+
+<#if testMap['key 3']?? >
+    <#assign key3Value = testMap['key 3']>
+    key 3 is present. Value: ${key3Value}
+<#else>
+    key 3 is NOT present
+</#if>
+
+<#if testMap['key 4']?? >
+    <#assign key4value = testMap['key 4']>
+    key 4 is present. Value: ${key4value}
+<#else>
+    key 4 is NOT present
+</#if>
+
+String with non-breaking space: ${testStringWithNbsp}

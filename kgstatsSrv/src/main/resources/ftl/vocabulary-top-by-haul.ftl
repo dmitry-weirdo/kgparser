@@ -48,7 +48,7 @@
             </tr>
 
             <#--            <#import "./player-td.ftl" as ptd>--> <#-- link to player profile -->
-            <#import "./player-td-vocabulary-stats-link.ftl" as ptd> <#-- link to player stats in the vocaulary -->
+            <#import "./player-td-vocabulary-stats-link.ftl" as ptd> <#-- link to player stats in the vocabulary -->
 
             <#list players as player>
                 <tr>

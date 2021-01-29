@@ -9,8 +9,11 @@ import org.springframework.stereotype.Component;
 import ru.klavogonki.kgparser.NonStandardDictionary;
 import ru.klavogonki.kgparser.Vocabulary;
 import ru.klavogonki.statistics.dto.MultiVocabularyTopDto;
+import ru.klavogonki.statistics.dto.PlayerMultiVocabularyDto;
 import ru.klavogonki.statistics.entity.PlayerEntity;
 import ru.klavogonki.statistics.entity.PlayerVocabularyStatsEntity;
+import ru.klavogonki.statistics.freemarker.MultiVocabularyTopBySpeedSumTemplate;
+import ru.klavogonki.statistics.freemarker.OrderUtils;
 import ru.klavogonki.statistics.mapper.MultiVocabularyTopDtoMapper;
 import ru.klavogonki.statistics.mapper.PlayerMultiVocabularyDtoMapper;
 import ru.klavogonki.statistics.repository.PlayerVocabularyStatsRepository;
@@ -60,11 +63,15 @@ public class MultiLinguaTopExporter implements DataExporter {
 
         logger.debug("Different players in multilingual top: {}", playerIdToVocabularyStats.size());
 
-        List<Integer> playerIds = playerIdToVocabularyStats
-            .values()
+        Map<Integer, List<PlayerVocabularyStatsEntity>> playerIdToVocabularyStatsWithResultsInMinVocabularies = playerIdToVocabularyStats
+            .entrySet()
             .stream()
-            .filter(playerVocabularyStatsEntities -> playerVocabularyStatsEntities.size() >= MIN_NON_NORMAL_VOCABULARIES) // filter by different vocabularies count
-            .map(playerVocabularyStatsEntities -> playerVocabularyStatsEntities.get(0).getPlayer().getPlayerId())
+            .filter(entry -> entry.getValue().size() >= MIN_NON_NORMAL_VOCABULARIES) // filter by different vocabularies count
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        List<Integer> playerIds = playerIdToVocabularyStatsWithResultsInMinVocabularies
+            .keySet()
+            .stream()
             .sorted()
             .collect(Collectors.toList());
 
@@ -74,7 +81,7 @@ public class MultiLinguaTopExporter implements DataExporter {
         // todo: also add StandardDictionary.normal
         List<Vocabulary> vocabularies = new ArrayList<>(nonStandardVocabularies);
 
-        List<PlayerMultiVocabularyDtoMapper.InputWrapper> playersMapperInput = playerIdToVocabularyStats
+        List<PlayerMultiVocabularyDtoMapper.InputWrapper> playersMapperInput = playerIdToVocabularyStatsWithResultsInMinVocabularies
             .values()
             .stream()
             .map(playerVocabularyStats -> {
@@ -103,8 +110,17 @@ public class MultiLinguaTopExporter implements DataExporter {
             .getPlayers()
             .sort((p1, p2) -> Integer.compare(p2.getBestSpeedsSum(), p1.getBestSpeedsSum()));
 
+        OrderUtils.fillOrderNumbers(multiVocabularyTopDto.getPlayers(), PlayerMultiVocabularyDto::getBestSpeedsSum);
+
         logger.debug("Converted player dto: \n {}", multiVocabularyTopDto);
 
-        // todo: pass to ftl exporter
+        // todo: paging
+        new MultiVocabularyTopBySpeedSumTemplate()
+            .vocabularies(multiVocabularyTopDto.getVocabularies())
+            .players(multiVocabularyTopDto.getPlayers())
+            .pageTitle("Топ по сумме скоростей в «Мультилингве»")
+            .header("Топ по сумме скоростей в «Мультилингве»")
+            .additionalHeader(String.format("Учтены игроки с результатами минимум в %d словарях (помимо «Обычного»)", MIN_NON_NORMAL_VOCABULARIES))
+            .export(context.webRootDir + "/_multilingua-top-by-speed-sum.html"); // todo: good name
     }
 }
