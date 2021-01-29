@@ -14,4 +14,6 @@ public interface PlayerVocabularyStatsRepository extends CrudRepository<PlayerVo
     List<PlayerVocabularyStatsEntity> findByVocabularyCodeEqualsAndRacesCountGreaterThanEqualAndPlayerBlockedEqualsOrderByHaulDesc(String vocabularyCode, int racesCount, int blocked);
 
     List<PlayerVocabularyStatsEntity> findByVocabularyCodeInAndPlayerBlockedEquals(List<String> vocabularyCodes, int blocked);
+
+    List<PlayerVocabularyStatsEntity> findByVocabularyCodeInAndPlayer_PlayerIdInAndPlayerBlockedEquals(List<String> vocabularyCodes, List<Integer> playerId, int blocked);
 }

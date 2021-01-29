@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import ru.klavogonki.kgparser.NonStandardDictionary;
+import ru.klavogonki.kgparser.StandardDictionary;
 import ru.klavogonki.kgparser.Vocabulary;
 import ru.klavogonki.statistics.dto.MultiVocabularyTopDto;
 import ru.klavogonki.statistics.dto.PlayerMultiVocabularyDto;
@@ -76,10 +77,23 @@ public class MultiLinguaTopExporter implements DataExporter {
             .collect(Collectors.toList());
 
         logger.debug("Player ids with stats for minimum {} different vocabularies, total {} players: {}", MIN_NON_NORMAL_VOCABULARIES, playerIds.size(), playerIds);
-        // todo: to not make the selection super-slow, select values for "normal" by a separate query with playerIds!
 
-        // todo: also add StandardDictionary.normal
-        List<Vocabulary> vocabularies = new ArrayList<>(nonStandardVocabularies);
+        // to not make the initial selection super-slow, select values for "normal" by a separate query with playerIds!
+        List<PlayerVocabularyStatsEntity> playersStatsInNormal = repository.findByVocabularyCodeInAndPlayer_PlayerIdInAndPlayerBlockedEquals(
+            List.of(StandardDictionary.normal.getCode()),
+            playerIds,
+            PlayerEntity.NOT_BLOCKED
+        );
+
+        logger.debug("Got player results for {} players in {}. Results count: {}", playerIds.size(), StandardDictionary.normal, playersStatsInNormal.size());
+
+        Map<Integer, PlayerVocabularyStatsEntity> playerIdToPlayerStatsInNormal = playersStatsInNormal
+            .stream()
+            .collect(Collectors.toMap(stats -> stats.getPlayer().getPlayerId(), stats -> stats));
+
+        List<Vocabulary> vocabularies = new ArrayList<>();
+        vocabularies.add(StandardDictionary.normal);
+        vocabularies.addAll(nonStandardVocabularies);
 
         List<PlayerMultiVocabularyDtoMapper.InputWrapper> playersMapperInput = playerIdToVocabularyStatsWithResultsInMinVocabularies
             .values()
@@ -90,6 +104,18 @@ public class MultiLinguaTopExporter implements DataExporter {
                 Map<String, PlayerVocabularyStatsEntity> playerVocabulariesMap = playerVocabularyStats
                     .stream()
                     .collect(Collectors.toMap(PlayerVocabularyStatsEntity::getVocabularyCode, f -> f));
+
+                Integer playerId = player.getPlayerId();
+                PlayerVocabularyStatsEntity playerResultInNormal = playerIdToPlayerStatsInNormal.get(playerId);
+                if (playerResultInNormal != null) {
+                    playerVocabulariesMap.put(
+                        StandardDictionary.normal.getCode(),
+                        playerResultInNormal
+                    );
+                }
+                else {
+                    logger.warn("Player with id = {}, login = {} has no result in {}.", playerId, player.getLogin(), StandardDictionary.normal);
+                }
 
                 return new PlayerMultiVocabularyDtoMapper.InputWrapper(
                     player,
