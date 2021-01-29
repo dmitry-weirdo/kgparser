@@ -35,6 +35,8 @@
 
     <div class="section" id="table-container">
 
+        <#import "./vocabulary-link.ftl" as vl>  <#-- link to dictionary -->
+
         <table class="data" aria-label="${header}">
             <tr>
                 <th scope="col" rowspan="2">#</th>
@@ -43,8 +45,7 @@
 
                 <#list vocabularies as vocabulary>
 
-                <#-- todo: link to vocabulary, get right from Dto, use ftl template -->
-                <th scope="col" colspan="7">${vocabulary.name}</th>
+                <th scope="col" colspan="7"><@vl.vocabularyLink vocabulary=vocabulary/></th>
 
                 </#list>
             </tr>

@@ -1,5 +1,7 @@
 package ru.klavogonki.kgparser;
 
+import ru.klavogonki.kgparser.http.UrlConstructor;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -203,6 +205,11 @@ public enum NonStandardDictionary implements Vocabulary {
     @Override
     public String getNamePrepositional() {
         return namePrepositional;
+    }
+
+    @Override
+    public String getLink() {
+        return UrlConstructor.dictionaryPage(getId());
     }
 
     public final String code;

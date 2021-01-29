@@ -7,4 +7,6 @@ public interface Vocabulary {
     String getName();
 
     String getNamePrepositional();
+
+    String getLink(); // ссылка на страницу словаря
 }

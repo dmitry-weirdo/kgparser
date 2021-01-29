@@ -10,4 +10,6 @@ public class VocabularyDto {
     private String name;
 
     private String namePrepositional;
+
+    private String link;
 }

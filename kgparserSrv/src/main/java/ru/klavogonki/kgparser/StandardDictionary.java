@@ -187,4 +187,9 @@ public enum StandardDictionary implements Vocabulary
 	public String getNamePrepositional() {
 		return getDisplayNameInPrepositionalCase(this);
 	}
+
+	@Override
+	public String getLink() {
+		return null; // todo: is there a link to normal dictionaries page?
+	}
 }
