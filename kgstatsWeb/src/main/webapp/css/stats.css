@@ -126,6 +126,25 @@ table.data th {
     font-weight: normal;
 }
 
+table.data th.second-row {
+    position: sticky;
+    top: 28px;
+    text-align: center;
+    padding: 5px;
+
+    /*border-top: 1px solid gray;*/
+    border-top: none;
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+
+    background-color: #e0e0e0;
+    font-weight: normal;
+}
+
+table.data th.no-left-border {
+    border-left: none !important;
+}
+
 table.data-no-header tr:first-child td { /* for tables with no header, provide a top-border in the first row */
     border-top: 1px solid gray;
 }

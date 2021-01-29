@@ -50,22 +50,22 @@
             </tr>
             <tr>
                 <#-- Сумма -->
-                <th scope="col">Словарей</th>
-                <th scope="col">Сумма рекордов</th>
-                <th scope="col">Пробег</th>
-                <th scope="col">Средняя</th>
-                <th scope="col">Ошибки, %</th>
-                <th scope="col">Общее время</th>
+                <th scope="col" class="second-row no-left-border">Словарей</th>
+                <th scope="col" class="second-row">Сумма рекордов</th>
+                <th scope="col" class="second-row">Пробег</th>
+                <th scope="col" class="second-row">Средняя</th>
+                <th scope="col" class="second-row">Ошибки, %</th>
+                <th scope="col" class="second-row">Общее время</th>
 
                 <#-- Словари -->
                 <#list vocabularies as vocabulary>
-                <th scope="col">Рекорд</th>
-                <th scope="col">Пробег</th>
-                <th scope="col">Средняя</th>
-                <th scope="col">Ошибки, %</th>
-                <th scope="col">Квала</th>
-                <th scope="col">Общее время</th>
-                <th scope="col">Обновлено</th>
+                <th scope="col" class="second-row">Рекорд</th>
+                <th scope="col" class="second-row">Пробег</th>
+                <th scope="col" class="second-row">Средняя</th>
+                <th scope="col" class="second-row">Ошибки, %</th>
+                <th scope="col" class="second-row">Квала</th>
+                <th scope="col" class="second-row">Общее время</th>
+                <th scope="col" class="second-row">Обновлено</th>
                 </#list>
 
             </tr>

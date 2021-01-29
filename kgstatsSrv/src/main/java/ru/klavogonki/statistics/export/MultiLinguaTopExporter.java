@@ -118,8 +118,8 @@ public class MultiLinguaTopExporter implements DataExporter {
         new MultiVocabularyTopBySpeedSumTemplate()
             .vocabularies(multiVocabularyTopDto.getVocabularies())
             .players(multiVocabularyTopDto.getPlayers())
-            .pageTitle("Топ по сумме скоростей в «Мультилингве»")
-            .header("Топ по сумме скоростей в «Мультилингве»")
+            .pageTitle("Топ по сумме рекордов в «Мультилингве»")
+            .header("Топ по сумме рекордов в «Мультилингве»")
             .additionalHeader(String.format("Учтены игроки с результатами минимум в %d словарях (помимо «Обычного»)", MIN_NON_NORMAL_VOCABULARIES))
             .export(context.webRootDir + "/_multilingua-top-by-speed-sum.html"); // todo: good name
     }
