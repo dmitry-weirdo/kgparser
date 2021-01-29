@@ -24,7 +24,7 @@ public class StatisticsGeneratorConfig {
 
     private boolean exportPlayersByRank;
 
-    // standard vocabularies
+    // standard vocabularies tops
     private boolean exportNormalTop;
     private boolean exportAbraTop;
     private boolean exportReferatsTop;
@@ -34,7 +34,7 @@ public class StatisticsGeneratorConfig {
     private boolean exportDigitsTop;
     private boolean exportSprintTop;
 
-    // non-standard vocabularies
+    // non-standard vocabularies tops
     private boolean exportNormalInEnglishTop;
     private boolean exportMiniMarathonTop;
     private boolean exportShortTextsTop;
@@ -44,4 +44,7 @@ public class StatisticsGeneratorConfig {
     private boolean exportTrainingIndexFingersTop;
     private boolean exportRingFingersTop;
     private boolean exportPinkiesPlusTop;
+
+    // multi-vocabularies tops
+    private boolean exportMultiLinguaTop;
 }

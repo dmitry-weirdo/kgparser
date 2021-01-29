@@ -95,6 +95,11 @@ public class StatisticsGenerator {
     @Autowired
     private PinkiesPlusTopExporter pinkiesPlusTopExporter;
 
+    // multi-vocabularies tops
+    @Autowired
+    private MultiLinguaTopExporter multiLinguaTopExporter;
+
+
     public void generateStatistics(final Config config, final StatisticsGeneratorConfig generatorConfig) {
         ExportContext context = new ExportContext(config);
 /*
@@ -145,6 +150,9 @@ public class StatisticsGenerator {
         export(context, generatorConfig.isExportTrainingIndexFingersTop(), trainingIndexFingersTopExporter);
         export(context, generatorConfig.isExportRingFingersTop(), ringFingersTopExporter);
         export(context, generatorConfig.isExportPinkiesPlusTop(), pinkiesPlusTopExporter);
+
+        // multi-vocabularies tops
+        export(context, generatorConfig.isExportMultiLinguaTop(), multiLinguaTopExporter);
     }
 
     // todo: think about moving StatisticsGeneratorConfig field determination to Exporter interface
