@@ -10,7 +10,7 @@ package ru.klavogonki.kgparser;
  * <br>
  * Энум с названиями стандартных словарей (режимов), как они используются в ajax-api.
  */
-public enum StandardDictionary
+public enum StandardDictionary implements Vocabulary
 {
 	/**
 	 * Обычный.
@@ -170,5 +170,21 @@ public enum StandardDictionary
 		catch (IllegalArgumentException e) {
 			return false;
 		}
+	}
+
+
+	@Override
+	public String getCode() {
+		return name();
+	}
+
+	@Override
+	public String getName() {
+		return getDisplayName(this);
+	}
+
+	@Override
+	public String getNamePrepositional() {
+		return getDisplayNameInPrepositionalCase(this);
 	}
 }

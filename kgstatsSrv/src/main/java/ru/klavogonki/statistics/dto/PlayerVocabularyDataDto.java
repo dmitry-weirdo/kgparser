@@ -7,6 +7,8 @@ public class PlayerVocabularyDataDto {
 
     private Integer racesCount; // пробег игрока по словарю
 
+    private Double averageSpeed; // средняя скорость игрока по словарю, знаков в минуту
+
     private Integer bestSpeed; // рекорд игрока по словарю, знаков в минуту
 
     private Double averageError; // процент ошибок игрока по словарю, в процентах

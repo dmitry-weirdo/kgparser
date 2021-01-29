@@ -1,11 +1,13 @@
 package ru.klavogonki.kgparser;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Популярные нестандартные словари.
  */
-public enum NonStandardDictionary {
+public enum NonStandardDictionary implements Vocabulary {
 
     // most popular non-standard dictionaries
     NORMAL_IN_ENGLISH(5539, "Обычный in English", "Обычном in English"),
@@ -122,8 +124,12 @@ public enum NonStandardDictionary {
         this.namePrepositional = namePrepositional;
     }
 
+    int getId() {
+        return Dictionary.getDictionaryId(code);
+    }
+
     public static List<NonStandardDictionary> getMultiLinguaNonStandardDictionaries() {
-        return List.of(
+        List<NonStandardDictionary> dictionaries = List.of(
             NORMAL_IN_ENGLISH,
             NORMAL_IN_BULGARIAN,
             NORMAL_IN_DUTCH,
@@ -176,6 +182,27 @@ public enum NonStandardDictionary {
             NORMAL_IN_KYRGYZ,
             NORMAL_IN_BENGALI
         );
+
+        // order by ids to have a stable order
+        return dictionaries
+            .stream()
+            .sorted(Comparator.comparingInt(NonStandardDictionary::getId))
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getNamePrepositional() {
+        return namePrepositional;
     }
 
     public final String code;

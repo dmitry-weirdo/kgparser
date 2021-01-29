@@ -3,7 +3,7 @@ package ru.klavogonki.statistics.dto;
 import lombok.Data;
 import ru.klavogonki.kgparser.Rank;
 
-import java.util.List;
+import java.util.Map;
 
 @Data
 public class PlayerMultiVocabularyDto {
@@ -19,6 +19,8 @@ public class PlayerMultiVocabularyDto {
 
     private String login;
 
+    private Integer rankLevel;
+
     private Rank rank;
 
     private Integer blocked;
@@ -31,7 +33,23 @@ public class PlayerMultiVocabularyDto {
 
     private String profileLink;
 
-    // todo: any other standard if required
+    // todo: any other standard fields if required
+    // todo: stats link?
 
-    private List<PlayerVocabularyDataDto> vocabulariesData;
+    // агрегация данных по всем словарям
+    private int totalVocabularies;
+
+    private int totalRacesCount;
+
+    private int bestSpeedsSum;
+
+    private Double averageSpeed;
+
+    private Double averageError;
+
+    private String totalHaul;
+
+    private Integer totalHaulInteger;
+
+    private Map<String, PlayerVocabularyDataDto> vocabulariesData; // vocabulary code to vocabulary data
 }
