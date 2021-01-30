@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Profile(Profiles.DATABASE)
 public class MultiLinguaTopExporter implements DataExporter {
 
-    private static final int MIN_NON_NORMAL_VOCABULARIES = 10;
+    private static final int MIN_NON_NORMAL_VOCABULARIES = 5;
 
     @Autowired
     protected PlayerVocabularyStatsRepository repository;
